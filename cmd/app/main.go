@@ -5,7 +5,8 @@ import (
 	"github.com/fwidjaya20/demo-distributed-event-store/cmd/nats"
 	"github.com/fwidjaya20/demo-distributed-event-store/config"
 	"github.com/fwidjaya20/demo-distributed-event-store/internal/database/migrations"
-	goNats "github.com/nats-io/go-nats"
+	stan "github.com/nats-io/go-nats-streaming"
+
 	//stan "github.com/nats-io/go-nats-streaming"
 	"github.com/oklog/oklog/pkg/group"
 	"github.com/payfazz/go-apt/pkg/fazzdb"
@@ -21,18 +22,18 @@ func main() {
 
 	var g group.Group
 
-	natsConn := initNATS(&g)
+	natsConn := initNATS()
 
 	initGRPC(&g, natsConn)
 
 	log.Fatalln("exit", g.Run())
 }
 
-func initNATS(g *group.Group) *goNats.Conn {
-	return nats.InitNatsConnection(g)
+func initNATS() stan.Conn {
+	return nats.InitNatsConnection()
 }
 
-func initGRPC(g *group.Group, natsConn *goNats.Conn) {
+func initGRPC(g *group.Group, natsConn stan.Conn) {
 	grpc.InitGrpcServer(g, natsConn)
 }
 

@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/fwidjaya20/demo-distributed-event-store/internal/event/models"
 	"github.com/jmoiron/sqlx"
+	"github.com/payfazz/go-apt/pkg/fazzcommon/formatter"
 	"github.com/payfazz/go-apt/pkg/fazzdb"
 )
 
@@ -28,11 +29,13 @@ func (r *repository) Insert(context context.Context, payload *models.EventStore)
 		return nil, err
 	}
 
-	return result.(*string), nil
+	uuid := formatter.SliceUint8ToString(result.([]uint8))
+
+	return &uuid, nil
 }
 
 func (r *repository) FindById(context context.Context, id string) (*models.EventStore, error) {
-	result, err := r.Q.Use(r.Event).Where("id", id).AllCtx(context)
+	result, err := r.Q.Use(r.Event).Where("id", id).FirstCtx(context)
 
 	if nil != err {
 		return nil, err

@@ -16,7 +16,7 @@ const (
 var defaultConfig = map[string]string {
 	SERVICE_NAME:	"EventStore",
 	NATS_ADDR: 		"nats://localhost:4222",
-	CLUSTER_ID: 	"test-clusters",
+	CLUSTER_ID: 	"test-cluster",
 	CLIENT_ID: 		"event-store-api",
 	GRPC_ADDR:		":5000",
 	DB_HOST:		"127.0.0.1",

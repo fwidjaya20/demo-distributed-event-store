@@ -6,7 +6,7 @@ import (
 	"github.com/fwidjaya20/demo-distributed-event-store/internal/event/repository"
 	pb "github.com/fwidjaya20/demo-distributed-event-store/pkg/protobuf/eventstore"
 	"github.com/jmoiron/sqlx"
-	"github.com/nats-io/go-nats"
+	stan "github.com/nats-io/go-nats-streaming"
 	"log"
 )
 
@@ -16,10 +16,10 @@ type ServiceInterface interface {
 
 type eventService struct {
 	repository repository.EventRepositoryInterface
-	nats *nats.Conn
+	nats stan.Conn
 }
 
-func NewEventService(db *sqlx.DB, natsConn *nats.Conn) ServiceInterface {
+func NewEventService(db *sqlx.DB, natsConn stan.Conn) ServiceInterface {
 	return &eventService{
 		repository: repository.NewEventRepository(db),
 		nats: natsConn,

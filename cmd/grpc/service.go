@@ -5,7 +5,7 @@ import (
 	"github.com/fwidjaya20/demo-distributed-event-store/internal/event"
 	grpcTransport "github.com/fwidjaya20/demo-distributed-event-store/internal/event/transports/grpc"
 	pb "github.com/fwidjaya20/demo-distributed-event-store/pkg/protobuf/eventstore"
-	"github.com/nats-io/go-nats"
+	stan "github.com/nats-io/go-nats-streaming"
 
 	//stan "github.com/nats-io/go-nats-streaming"
 	"github.com/oklog/oklog/pkg/group"
@@ -15,7 +15,7 @@ import (
 	"os"
 )
 
-func InitGrpcServer(g *group.Group, natsConn *nats.Conn) {
+func InitGrpcServer(g *group.Group, natsConn stan.Conn) {
 	GRPCAddress := config.GetEnv(config.GRPC_ADDR)
 
 	list, err := net.Listen("tcp", GRPCAddress)

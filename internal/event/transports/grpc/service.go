@@ -15,14 +15,13 @@ type EventGrpcService struct {
 func (s EventGrpcService) CreateEvent(context context.Context, payload *pb.Event) (*pb.EventResponse, error) {
 	log.Println("[EVENT_GRPC_SERVICE] CreateEvent", payload.String())
 
-	m := &models.EventStore{
-		Id:            payload.EventId,
-		Type:          payload.EventType,
-		AggregateId:   payload.AggregateId,
-		AggregateType: payload.AggregateType,
-		EventPayload:  payload.EventData,
-		Channel:       payload.Channel,
-	}
+	m := models.EventStoreModel()
+
+	m.Type = payload.EventType
+	m.AggregateId = payload.AggregateId
+	m.AggregateType = payload.AggregateType
+	m.Channel = payload.Channel
+	m.EventPayload = payload.EventData
 
 	result, err := s.EventService.Create(context, m)
 
