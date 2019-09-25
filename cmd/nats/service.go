@@ -14,7 +14,7 @@ func InitNatsConnection() stan.Conn {
 
 	natsConn, err := stan.Connect(cluster, clientId, stan.NatsURL(natsAddr))
 
-	if err != nil {
+	if nil != err {
 		log.Println("transport", "nats", "err", err)
 		os.Exit(1)
 	}

@@ -7,7 +7,6 @@ import (
 	"github.com/fwidjaya20/demo-distributed-event-store/internal/database/migrations"
 	stan "github.com/nats-io/go-nats-streaming"
 
-	//stan "github.com/nats-io/go-nats-streaming"
 	"github.com/oklog/oklog/pkg/group"
 	"github.com/payfazz/go-apt/pkg/fazzdb"
 	"log"
